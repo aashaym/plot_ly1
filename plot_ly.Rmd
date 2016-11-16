@@ -1,0 +1,60 @@
+---
+title: "Plotly"
+author: "Aashay M"
+date: "November 16, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+library(shiny)
+library(plotly)
+data(mtcars)
+
+
+  
+  ui <- fluidPage (
+              titlePanel("Demonstration of Polty"),
+              Sys.Date(),
+    sidebarLayout(
+      sidebarPanel(
+    checkboxGroupInput("typ","Select from Below :",
+                        c("boxPlot"="box",
+                           "Scaterplot"= "scatter",
+                           "Histogram"="histogram"  )),
+    
+     checkboxGroupInput("fac","As FActor :",
+                        c("cyl"="cyl",
+                           "gear"= "gear")), 
+       submitButton(text = "Submit")      
+  ),
+   mainPanel(
+     plotOutput("xy",width = "100%",height = "400px")
+   )
+    )
+  )
+    
+  shinyApp(ui,server <- function(input, output) {
+    output$xy<-renderPlot({ 
+  
+    
+      plot_ly(x=mtcars$mpg, y=mtcars$disp,data=mtcars,xlab = "weight",ylab = "millage per gallon",main="simple Demonstration", type = input$typ,
+               pch=as.character(input$fac) )
+         
+   }
+)
+ 
+  }
+)
+
+
+
+
+
+
+
+knitr::opts_chunk$set(echo = TRUE,eval = TRUE)
+```
+
+
+## I am unable to run Plot_ly package on my IDE , I am submitting raw code please evaluate with your valuable suggetions.
